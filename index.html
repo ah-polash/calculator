@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    
+    <style>
+        main{width: 600px; margin: 0 auto;}
+        body{font-size: 50px;}
+        #output-display{text-align: right; background: rgba(128, 128, 128, 0.393); margin-bottom: 15px;}
+        #grid {
+            display: grid;
+            height: 350px;
+            grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+            gap: 20px 5px;
+            text-align: center;
+        }
+
+        #grid div {
+        border: 1px solid green;
+        background-color: lime;
+        cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <div id="output-display">0</div>
+        </header>
+        <div id="grid">
+            <div onclick="setDisplayNumbers(7)">7</div>
+            <div onclick="setDisplayNumbers(8)">8</div>
+            <div onclick="setDisplayNumbers(9)">9</div>
+            <div onclick="setDisplayNumbers('/')">/</div>
+            <div onclick="setDisplayNumbers(4)">4</div>
+            <div onclick="setDisplayNumbers(5)">5</div>
+            <div onclick="setDisplayNumbers(6)">6</div>
+            <div onclick="setDisplayNumbers('*')">*</div>
+            <div onclick="setDisplayNumbers(1)">1</div>
+            <div onclick="setDisplayNumbers(2)">2</div>
+            <div onclick="setDisplayNumbers(3)">3</div>
+            <div onclick="setDisplayNumbers('-')">-</div>
+            <div onclick="setDisplayNumbers(0)"> 0</div>
+            <div onclick="resetDisplay()">C</div>
+            <div onclick="showResult()">=</div>
+            <div onclick="setDisplayNumbers('+')">+</div>
+        </div>
+    </main>
+    <script>
+        function getDisplayNumbers(){
+            numbers=document.getElementById('output-display').innerText;
+            return numbers;
+        }
+        function setDisplayNumbers(number){
+            let oldDisplayNumber = getDisplayNumbers()
+            if(oldDisplayNumber==='0'){
+                oldDisplayNumber='';
+            }
+
+            let CurrentDisplayNumbers = oldDisplayNumber.concat(number);
+            let convertedNumber = parseFloat(CurrentDisplayNumbers)
+                //console.log('converted Number', typeof convertedNumber, convertedNumber)
+
+            document.getElementById('output-display').innerText=CurrentDisplayNumbers;
+
+        }
+        function resetDisplay(){
+            document.getElementById('output-display').innerText= '0';
+        }
+
+
+        function showResult(){
+            let num = document.getElementById('output-display').innerText;
+            function parse(str) {      
+            return Function(` return (${str})`)()
+            }
+            let result = parse(num)
+
+            console.log(result)
+            document.getElementById('output-display').innerText=result;
+    
+        }
+    </script>  
+</body>
+</html>
